@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: c01-node01
+  labels:
+    app: c01-node01
+spec:
+  replicas: 1
+  selector:
+    app: c01-node01
+  template:
+    metadata:
+      labels:
+        app: c01-node01
+    spec: 
+      containers:
+      - name: c01-node01-container
+        image: cduchesne/k8s-cassandra:3.7-graphite-remotejmx-avidns
+        imagePullPolicy: Always
+        command: ["/docker-entrypoint.sh", "-Dcassandra.metricsReporterConfigFile=metrics-reporter-config.yaml"]
+        resources:
+          limits:
+            cpu: "8"
+            memory: 12Gi
+          requests:
+            cpu: "6"
+            memory: 12Gi
+        env:
+        - name: CASSANDRA_SEEDS
+          value: "c01-node01.default.svc.cluster.local" 
+        - name: CASSANDRA_CLUSTER_NAME
+          value: "cassandra01"
+        - name: CASSANDRA_NODE_NAME
+          value: "c01-node01"
+        - name: CASSANDRA_DC
+          value: "SJC"
+        - name: CASSANDRA_RACK
+          value: "rack1"
+        - name: CASSANDRA_ENDPOINT_SNITCH
+          value: "GossipingPropertyFileSnitch"
+        - name: CASSANDRA_NUM_TOKENS
+          value: "16"
+        - name: LOCAL_JMX
+          value: "no"
+        - name: GRAPHITE_HOST
+          value: "10.10.0.1"
+        - name: AVI_DNS_VIP
+          value: "10.50.100.250"
+        - name: AVI_DOMAIN_NAME
+          value: "default.k8s.democluster.com."
+        livenessProbe:
+          tcpSocket:
+            port: 9042
+          initialDelaySeconds: 600
+          timeoutSeconds: 10
+        volumeMounts:
+        - mountPath: /var/lib/cassandra
+          name: c01-node01
+      volumes:
+      - name: c01-node01
+        libStorage:
+          host: http://10.50.22.100:7979
+          volumeName: c01-node01
+          service: scaleio

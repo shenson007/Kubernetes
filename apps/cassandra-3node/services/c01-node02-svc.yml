@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: c01-node02
+  labels:
+    app: c01-node02
+  annotations:
+    avi_proxy: '{"virtualservice": {"auto_allocate_ip": true, "east_west_placement": false}}'
+spec:
+  clusterIP: None
+  ports:
+  - name: cql
+    port: 9042 #cql (cassandra clients)
+  - name: jmx
+    port: 7199 #jmx
+  - name: node-communication
+    port: 7000 #node communication (non-ssl)
+  selector:
+    app: c01-node02
