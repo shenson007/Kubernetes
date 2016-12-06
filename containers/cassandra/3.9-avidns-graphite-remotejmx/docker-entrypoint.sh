@@ -29,6 +29,7 @@ CASSANDRA_BROADCAST_RPC_ADDRESS=$BROADCAST_IP
 #set default options for container
 CASSANDRA_AUTHENTICATOR="AllowAllAuthenticator"
 CASSANDRA_AUTHORIZER="AllowAllAuthorizer"
+CASSANDRA_AUTO_SNAPSHOT="false"
 CASSANDRA_COMPACTION_LARGE_PARTITION_WARNING_THRESHOLD_MB=100
 CASSANDRA_COMPACTION_THROUGHPUT_MB_PER_SEC=0
 CASSANDRA_CONCURRENT_COMPACTORS=8
@@ -61,6 +62,7 @@ if [ "$1" = 'cassandra' ]; then
 	for yaml in \
 		authenticator \
 		authorizer \
+		auto_snapshot \
 		broadcast_address \
 		broadcast_rpc_address \
 		cluster_name \
