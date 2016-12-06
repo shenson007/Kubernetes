@@ -7,6 +7,7 @@ metadata:
   annotations:
     avi_proxy: '{"virtualservice": {"auto_allocate_ip": true, "east_west_placement": false}}'
 spec:
+  clusterIP: None
   ports:
   - port: 80
     targetPort: 3000
