@@ -33,3 +33,4 @@ spec:
           host: http://10.50.22.100:7979
           volumeName: graphite
           service: scaleio
+          fsType: xfs
