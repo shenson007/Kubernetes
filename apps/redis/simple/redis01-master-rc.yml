@@ -26,21 +26,3 @@ spec:
             port: 6379
           initialDelaySeconds: 5
           timeoutSeconds: 1
-        volumeMounts:
-        - name: redis01-master
-          mountPath: /data
-<<<<<<< HEAD
-      volumes:
-      - name: redis01-master
-        libStorage:
-          host: http://10.50.22.100:7979
-          volumeName: redis01-master
-          service: scaleio
-=======
-    volumes:
-    - name: redis01-master
-      libStorage:
-        host: http://10.50.22.100:7979
-        volumeName: redis01-master
-        service: scaleio
->>>>>>> wip/cassandra-poc-test1

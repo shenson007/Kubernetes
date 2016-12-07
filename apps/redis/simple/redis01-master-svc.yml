@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: redis01-master
   labels:
-    app: redis
+    app: redis01
     role: master
 spec:
   ports:
