@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: rexray-server
+  labels:
+    app: rexray-server
+spec:
+  replicas: 1
+  selector:
+    app: rexray-server
+  template:
+    metadata:
+      labels:
+        app: rexray-server
+    spec: 
+      containers:
+      - name: rexray-server
+        image: cduchesne/rexray-server:0.6.0
+        imagePullPolicy: Always
+        env:
+        - name: "LIBSTORAGE_HOST"
+          value: "tcp://0.0.0.0:7979"
+        - name: "LIBSTORAGE_EMBEDDED"
+          value: "true"
+        - name: "LIBSTORAGE_CLIENT_TYPE"
+          value: "controller"
+        - name: "LIBSTORAGE_LOGGING_HTTPREQUESTS"
+          value: "true"
+        - name: "LIBSTORAGE_LOGGING_HTTPRESPONSES"
+          value: "true"
+        - name: "LIBSTORAGE_LOGGING_LEVEL"
+          value: "debug"
+        - name: "LIBSTORAGE_SERVER_AUTOENDPOINTMODE"
+          value: "tcp"
+        - name: "LIBSTORAGE_SERVICE"
+          value: "scaleio"
+        - name: "LIBSTORAGE_SERVER_SERVICES_SCALEIO_DRIVER"
+          value: "scaleio"
+        - name: "SCALEIO_ENDPOINT"
+          value: "https://scaleio-gateway.default.svc.cluster.local/api"
+        - name: "SCALEIO_INSECURE"
+          value: "true"
+        - name: "SCALEIO_PASSWORD"
+          value: "sCaleIO2016"
+        - name: "SCALEIO_PROTECTIONDOMAINNAME"
+          value: "default"
+        - name: "SCALEIO_STORAGEPOOLNAME"
+          value: "default"
+        - name: "SCALEIO_SYSTEMNAME"
+          value: "scaleio"
+        - name: "SCALEIO_USERNAME"
+          value: "admin"
+        ports:
+        - containerPort: 7979
+        livenessProbe:
+          tcpSocket:
+            port: 7979 
+          initialDelaySeconds: 60
+          timeoutSeconds: 3
