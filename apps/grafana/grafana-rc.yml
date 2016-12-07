@@ -24,8 +24,8 @@ spec:
         livenessProbe:
           tcpSocket:
             port: 3000
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
+          initialDelaySeconds: 60
+          timeoutSeconds: 3
         volumeMounts:
         - name: grafana
           mountPath: /var/lib/grafana
