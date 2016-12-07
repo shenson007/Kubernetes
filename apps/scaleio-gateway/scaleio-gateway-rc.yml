@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: scaleio-gateway
+  labels:
+    app: scaleio-gateway
+spec:
+  replicas: 1
+  selector:
+    app: scaleio-gateway
+  template:
+    metadata:
+      labels:
+        app: scaleio-gateway
+    spec: 
+      containers:
+      - name: scaleio-gateway
+        image: cduchesne/scaleio-gateway:2.0.1
+        imagePullPolicy: Always
+        env:
+        - name: "MDM1_IP_ADDRESS"
+          value: "10.50.10.101"
+        - name: "MDM2_IP_ADDRESS"
+          value: "10.50.10.102"
+        - name: "TRUST_MDM_CRT"
+          value: "true"
+        ports:
+        - containerPort: 7979
+        livenessProbe:
+          tcpSocket:
+            port: 7979 
+          initialDelaySeconds: 600
+          timeoutSeconds: 5

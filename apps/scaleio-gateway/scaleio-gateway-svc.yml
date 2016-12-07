@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scaleio-gateway
+  labels:
+    app: scaleio-gateway
+  annotations:
+    avi_proxy: '{"virtualservice": {"auto_allocate_ip": true, "east_west_placement": false}}'
+spec:
+  clusterIP: None
+  ports:
+    - port: 443
+  selector:
+    app: scaleio-gateway
