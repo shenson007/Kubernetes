@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: scaleio-graphite
+spec:
+  selector:
+    app: scaleio-graphite
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: scaleio-graphite
+    spec: 
+      containers:
+      - name: scaleio-graphite
+        image: cduchesne/scaleio-graphite
+        imagePullPolicy: Always
+        env:
+        - name: SCALEIO_GATEWAY
+          value: "https://10.50.10.200"
+        - name: SCALEIO_USER
+          value: "admin"
+        - name: SCALEIO_PASSWORD
+          value: "sCaleIO2016"
+        - name: GRAPHITE_HOST
+          value: "graphite.default.svc.cluster.local"
+        - name: GRAPHITE_PORT
+          value: "2003"
