@@ -25,9 +25,9 @@ spec:
         - name: "TRUST_MDM_CRT"
           value: "true"
         ports:
-        - containerPort: 7979
+        - containerPort: 443
         livenessProbe:
           tcpSocket:
-            port: 7979 
+            port: 443
           initialDelaySeconds: 600
           timeoutSeconds: 5
