@@ -15,7 +15,7 @@ spec:
     spec: 
       containers:
       - name: c01-node01-container
-        image: cduchesne/k8s-cassandra:3.9-avidns-graphite-remotejmx
+        image: cduchesne/k8s-cassandra:2.2-avidns-graphite-opscenter-remotejmx
         imagePullPolicy: Always
         command: ["/docker-entrypoint.sh","cassandra","-f","-Dcassandra.metricsReporterConfigFile=metrics-reporter-config.yaml"]
         resources:
@@ -33,13 +33,15 @@ spec:
         - name: CASSANDRA_NODE_NAME
           value: "c01-node01"
         - name: CASSANDRA_DC
-          value: "SJC"
+          value: "DFW"
         - name: CASSANDRA_RACK
           value: "rack1"
         - name: LOCAL_JMX
           value: "no"
         - name: GRAPHITE_HOST
           value: "graphite.default.svc.cluster.local"
+        - name: OPSCENTER_HOST
+          value: "opscenter.default.svc.cluster.local"
         - name: AVI_DNS_VIP
           value: "10.50.100.250"
         - name: AVI_DOMAIN_NAME
