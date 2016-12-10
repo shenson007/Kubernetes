@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: opscenter
+  labels:
+    app: opscenter
+spec:
+  replicas: 1
+  selector:
+    app: opscenter
+  template:
+    metadata:
+      labels:
+        app: opscenter
+    spec: 
+      containers:
+      - name: opscenter
+        image: cduchesne/opscenter:5.2.4 
+        ports:
+        - containerPort: 8888
+        - containerPort: 50031
+        - containerPort: 61620
+        livenessProbe:
+          tcpSocket:
+            port: 8888
+          initialDelaySeconds: 60
+          timeoutSeconds: 3
