@@ -127,9 +127,9 @@ if [ "$1" = 'cassandra' ]; then
 
 	#set options for opscenter
 	if [ "${OPSCENTER_HOST+1}" ]; then
-		sed -ri 's/^(stomp_host: ).*/\1 '\'"$OPSCENTER_HOST"\''/' "/var/lib/datastax-agent/conf/address.yaml"
-		sed -i 's/127.0.0.1/${BROADCAST_IP}/g' "/var/lib/datastax-agent/conf/address.yaml"
-		/etc/init.d/datastax-agent start
+		sed -ri 's/^(stomp_interface: ).*/\1 '\'"$OPSCENTER_HOST"\''/' "/var/lib/datastax-agent/conf/address.yaml"
+		sed -i 's/127.0.0.1/'"$NODE_IP"'/g' "/var/lib/datastax-agent/conf/address.yaml"
+		#/etc/init.d/datastax-agent start
 	fi
 
 fi

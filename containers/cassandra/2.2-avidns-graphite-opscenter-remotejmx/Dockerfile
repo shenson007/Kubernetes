@@ -1,7 +1,7 @@
 FROM cassandra:2.2
 
 #update image and install necessary utilities
-RUN apt-get update && apt-get install -y sudo htop dstat curl dnsutils
+RUN apt-get update && apt-get install -y sudo htop dstat curl dnsutils sysstat
 
 #add modified cassandra.yaml and cassandra-env.sh to container image
 COPY cassandra.yaml /etc/cassandra/cassandra.yaml

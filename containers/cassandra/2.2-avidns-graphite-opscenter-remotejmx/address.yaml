@@ -2,4 +2,4 @@ stomp_interface: opscenter_host
 use_ssl: 0
 local_interface: 127.0.0.1
 hosts: ["127.0.0.1"]
-cassandra_log_location: /var/lib/cassandra/logs
+cassandra_log_location: /var/log/cassandra/ 
