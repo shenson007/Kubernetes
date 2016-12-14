@@ -29,8 +29,11 @@ spec:
           mountPath: /opt/graphite/storage/whisper 
       volumes:
       - name: graphite
-        libStorage:
-          host: http://10.50.22.100:7979
-          volumeName: graphite
-          service: scaleio
+        flexVolume:
+          driver: rexray/flexrex
           fsType: xfs
+          options:
+            volumeID: graphite
+            service: scaleio
+            forceAttach: "true"
+            forceAttachDelay: "20"

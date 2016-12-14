@@ -31,8 +31,11 @@ spec:
           mountPath: /var/lib/grafana
       volumes:
       - name: grafana
-        libStorage:
-          host: http://10.50.22.100:7979
-          volumeName: grafana
-          service: scaleio
+        flexVolume:
+          driver: rexray/flexrex
           fsType: xfs
+          options:
+            volumeID: grafana
+            service: scaleio
+            forceAttach: "true"
+            forceAttachDelay: "20"

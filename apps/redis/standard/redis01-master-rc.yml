@@ -31,7 +31,11 @@ spec:
           mountPath: /data
       volumes:
       - name: redis01-master
-        libStorage:
-          host: http://10.50.22.100:7979
-          volumeName: redis01-master
-          service: scaleio
+        flexVolume:
+          driver: rexray/flexrex
+          fsType: xfs
+          options:
+            volumeID: redis01-master
+            service: scaleio
+            forceAttach: "true"
+            forceAttachDelay: "20"
