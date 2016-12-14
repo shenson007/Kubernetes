@@ -20,11 +20,11 @@ spec:
         command: ["/docker-entrypoint.sh","cassandra","-f","-Dcassandra.metricsReporterConfigFile=metrics-reporter-config.yaml"]
         resources:
           limits:
-            cpu: "8"
-            memory: 12Gi
+            cpu: "20"
+            memory: 128Gi
           requests:
-            cpu: "6"
-            memory: 12Gi
+            cpu: "10"
+            memory: 128Gi
         env:
         - name: CASSANDRA_SEEDS
           value: "c01-node01.default.svc.cluster.local" 
@@ -56,8 +56,11 @@ spec:
           name: c01-node02
       volumes:
       - name: c01-node02
-        libStorage:
-          host: http://10.50.22.100:7979
-          volumeName: c01-node02
-          service: scaleio
+        flexVolume:
+          driver: rexray/flexrex
           fsType: xfs
+          options:
+            volumeID: c01-node02
+            service: scaleio
+            forceAttach: "true"
+            forceAttachDelay: "20"
