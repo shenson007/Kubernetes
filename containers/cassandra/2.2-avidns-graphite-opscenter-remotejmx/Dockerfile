@@ -8,8 +8,8 @@ COPY cassandra.yaml /etc/cassandra/cassandra.yaml
 COPY cassandra-env.sh /etc/cassandra/cassandra-env.sh
 
 #add required files for graphite metrics reporting
-COPY metrics-graphite-3.1.2.jar /usr/share/cassandra/lib
-COPY metrics-reporter-config.yaml /etc/cassandra/metrics-reporter-config.yaml
+#COPY metrics-graphite-3.1.2.jar /usr/share/cassandra/lib
+#COPY metrics-reporter-config.yaml /etc/cassandra/metrics-reporter-config.yaml
 
 #disable jmx remote authentication for demo purposes
 RUN sed -i 's/jmxremote.authenticate=true/jmxremote.authenticate=false/g' /etc/cassandra/cassandra-env.sh
