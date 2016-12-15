@@ -22,7 +22,7 @@ cluster_name: 'Test Cluster'
 #
 # If you already have a cluster with 1 token per node, and wish to migrate to 
 # multiple tokens per node, see http://wiki.apache.org/cassandra/Operations
-num_tokens: 256
+num_tokens: 64
 
 # initial_token allows you to specify tokens manually.  While you can use # it with
 # vnodes (num_tokens > 1, above) -- in which case you should provide a 
@@ -117,7 +117,7 @@ commitlog_directory: /var/lib/cassandra/commitlog
 # stop_paranoid: shut down gossip and client transports even for single-sstable errors,
 #                kill the JVM for errors during startup.
 # stop: shut down gossip and client transports, leaving the node effectively dead, but
-#       can still be inspected via JMX, kill the JVM for errors during startup.
+#       can still be inspected via , kill the JVM for errors during startup.
 # best_effort: stop using the failed disk and respond to requests based on
 #              remaining available sstables.  This means you WILL see obsolete
 #              data at CL.ONE!
@@ -283,8 +283,8 @@ seed_provider:
 # On the other hand, since writes are almost never IO bound, the ideal
 # number of "concurrent_writes" is dependent on the number of cores in
 # your system; (8 * number_of_cores) is a good rule of thumb.
-concurrent_reads: 32
-concurrent_writes: 32
+concurrent_reads: 64
+concurrent_writes: 64
 concurrent_counter_writes: 32
 
 # Total memory to use for sstable-reading buffers.  Defaults to
@@ -333,7 +333,7 @@ memtable_allocation_type: heap_buffers
 # 
 # If your data directories are backed by SSD, you should increase this
 # to the number of cores.
-memtable_flush_writers: 8
+memtable_flush_writers: 4
 
 # A fixed memory pool size in MB for for SSTable index summaries. If left
 # empty, this will default to 5% of the heap size. If the memory usage of
@@ -354,7 +354,7 @@ index_summary_resize_interval_in_minutes: 60
 # buffers. Enable this to avoid sudden dirty buffer flushing from
 # impacting read latencies. Almost always a good idea on SSDs; not
 # necessarily on platters.
-trickle_fsync: false
+trickle_fsync: true
 trickle_fsync_interval_in_kb: 10240
 
 # TCP port, for commands and data
@@ -525,7 +525,7 @@ snapshot_before_compaction: false
 # or dropping of column families. The STRONGLY advised default of true 
 # should be used to provide data safety. If you set this flag to false, you will
 # lose data on truncation or drop.
-auto_snapshot: true
+auto_snapshot: false
 
 # When executing a scan, within or across a partition, we need to keep the
 # tombstones seen in memory so we can return them to the coordinator, which
@@ -573,7 +573,7 @@ unlogged_batch_across_partitions_warn_threshold: 10
 # 
 # If your data directories are backed by SSD, you should increase this
 # to the number of cores.
-concurrent_compactors: 1
+concurrent_compactors: 8
 
 # Throttles compaction to the given total throughput across the entire
 # system. The faster you insert data, the faster you need to compact in
@@ -581,7 +581,7 @@ concurrent_compactors: 1
 # 16 to 32 times the rate you are inserting data is more than sufficient.
 # Setting this to 0 disables throttling. Note that this account for all types
 # of compaction, including validation compaction.
-compaction_throughput_mb_per_sec: 16
+compaction_throughput_mb_per_sec: 0
 
 # Log a warning when compacting partitions larger than this value
 compaction_large_partition_warning_threshold_mb: 100
@@ -597,7 +597,7 @@ sstable_preemptive_open_interval_in_mb: 50
 # mostly sequential IO when streaming data during bootstrap or repair, which
 # can lead to saturating the network connection and degrading rpc performance.
 # When unset, the default is 200 Mbps or 25 MB/s.
-stream_throughput_outbound_megabits_per_sec: 200
+stream_throughput_outbound_megabits_per_sec: 4000
 
 # Throttles all streaming file transfer between the datacenters,
 # this setting allows users to throttle inter dc stream throughput in addition
@@ -702,7 +702,7 @@ streaming_socket_timeout_in_ms: 86400000
 #
 # You can use a custom Snitch by setting this to the full class name
 # of the snitch, which will be assumed to be on your classpath.
-endpoint_snitch: SimpleSnitch
+endpoint_snitch: GossipingPropertyFileSnitch
 
 # controls how often to perform the more expensive part of host score
 # calculation
